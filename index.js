@@ -1,21 +1,24 @@
 const sum = (args) => args.reduce((prev, curr) => prev + curr)
 const defn = (functionName, args, body) => {
-   return sum(args)
+   return body[0](args)
 }
-let arr1 = []
-let arr2 = []
-let functionName = ''
+
 const interpret = (...code) => {
+    let arr1 = []
+    let args = []
+    let body = []
+    let functionName = ''
     for (let arr of code ) {
         if (arr[0] === defn) {
             arr1 = arr
             functionName = arr1[1]
         } else if (arr[0] === functionName) {
-            arr2 = arr
+            args = arr
         }
-        arr2.splice(0, 1)
+        body = arr1[3]
+        args.splice(0, 1)
     }
-   return defn(arr1[1], arr2, arr1[3])
+   return defn(arr1[1], args, body)
 }
 
 // Пример вызова функции interpret
